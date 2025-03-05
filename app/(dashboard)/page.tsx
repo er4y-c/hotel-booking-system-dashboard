@@ -1,9 +1,11 @@
 import React from 'react';
+import Breadcrumbs from '@/components/breadcrumbs';
 
 export default function Home() {
   return (
     <div>
-      <h1>Dashboard Page</h1>
+      <Breadcrumbs items={[{ text: 'Dashboard', href: '/' }]} />
+      <h1>Welcome !</h1>
     </div>
   );
 }
