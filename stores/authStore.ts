@@ -15,14 +15,13 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       user: null,
       setToken: (data) => {
-        // Implement login logic here, e.g., API call
         set({ token: data.token });
       },
       setUser: () => {},
       logout: () => set({ token: null }),
     }),
     {
-      name: 'auth-storage', // name of the item in the storage
+      name: 'auth-storage',
     },
   ),
 );

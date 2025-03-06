@@ -1,22 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import {
-  AudioWaveform,
-  Command,
-  GalleryVerticalEnd,
-  Settings2,
-  Home,
-  Book,
-  Activity,
-  DollarSign,
-  BarChart,
-} from 'lucide-react';
+import { Settings2, Home, Book, Activity, DollarSign, BarChart } from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';
 import { NavReports } from '@/components/nav-reports';
 import { NavUser } from '@/components/nav-user';
-import { TeamSwitcher } from '@/components/team-switcher';
+import { HotelSwitcher } from '@/components/hotel-switcher';
 import {
   Sidebar,
   SidebarContent,
@@ -32,23 +22,6 @@ const data = {
     email: 'm@example.com',
     avatar: '/avatars/shadcn.jpg',
   },
-  teams: [
-    {
-      name: 'Acme Inc',
-      logo: GalleryVerticalEnd,
-      plan: 'Enterprise',
-    },
-    {
-      name: 'Acme Corp.',
-      logo: AudioWaveform,
-      plan: 'Startup',
-    },
-    {
-      name: 'Evil Corp.',
-      logo: Command,
-      plan: 'Free',
-    },
-  ],
   navMain: [
     {
       title: 'Room Management',
@@ -132,7 +105,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <HotelSwitcher />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />

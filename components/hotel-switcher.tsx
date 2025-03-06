@@ -1,7 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { ChevronsUpDown, Plus } from 'lucide-react';
+import { ChevronsUpDown, Hotel } from 'lucide-react';
+
+import { hotelServices } from '@/services/hotel';
+import { useHotelStore } from '@/stores/hotelStore';
 
 import {
   DropdownMenu,
@@ -18,23 +21,32 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { CreateHotelPopup } from '@/components/create-hotel-popup';
 
-export function TeamSwitcher({
-  teams,
-}: {
-  teams: {
-    name: string;
-    logo: React.ElementType;
-    plan: string;
-  }[];
-}) {
+export function HotelSwitcher() {
+  const { hotels, setHotels, setSelectedHotel, selectedHotel, setIsLoading } = useHotelStore();
   const { isMobile } = useSidebar();
-  const [activeTeam, setActiveTeam] = React.useState(teams[0]);
 
-  if (!activeTeam) {
+  React.useEffect(() => {
+    setIsLoading(true);
+    hotelServices
+      .list()
+      .then((response) => {
+        // Assuming response.data holds Hotel[]
+        setHotels(response.data);
+        setSelectedHotel(response.data[0]);
+      })
+      .catch((error) => {
+        console.error('Error fetching hotels:', error);
+      })
+      .finally(() => setIsLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!selectedHotel) {
     return null;
   }
-
+  console.log(selectedHotel);
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -45,11 +57,11 @@ export function TeamSwitcher({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                <activeTeam.logo className="size-4" />
+                <Hotel className="w-4 h-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{activeTeam.name}</span>
-                <span className="truncate text-xs">{activeTeam.plan}</span>
+                <span className="truncate font-medium">{selectedHotel.name}</span>
+                <span className="truncate text-xs">{selectedHotel.name}</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
@@ -60,26 +72,23 @@ export function TeamSwitcher({
             side={isMobile ? 'bottom' : 'right'}
             sideOffset={4}
           >
-            <DropdownMenuLabel className="text-muted-foreground text-xs">Teams</DropdownMenuLabel>
-            {teams.map((team, index) => (
+            <DropdownMenuLabel className="text-muted-foreground text-xs">Hotels</DropdownMenuLabel>
+            {hotels.map((hotel, index) => (
               <DropdownMenuItem
-                key={team.name}
-                onClick={() => setActiveTeam(team)}
+                key={hotel.name}
+                onClick={() => setSelectedHotel(hotel)}
                 className="gap-2 p-2"
               >
                 <div className="flex size-6 items-center justify-center rounded-xs border">
-                  <team.logo className="size-4 shrink-0" />
+                  <Hotel className="w-4 h-4 shrink-0" />
                 </div>
-                {team.name}
+                {hotel.name}
                 <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
             <DropdownMenuItem className="gap-2 p-2">
-              <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-                <Plus className="size-4" />
-              </div>
-              <div className="text-muted-foreground font-medium">Add team</div>
+              <CreateHotelPopup />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
