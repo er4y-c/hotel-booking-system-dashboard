@@ -42,25 +42,23 @@ export function CreateHotelPopup() {
     resolver: zodResolver(createHotelSchema),
   });
 
-  const mutation = useMutation(
-    (newHotel: CreateHotelInput) => hotelServices.create(newHotel as Hotel),
-    {
-      onSuccess: (res: { data: Hotel }) => {
-        setSelectedHotel({
-          _id: res.data._id,
-          name: res.data.name,
-          address: res.data.address,
-          description: res.data.description,
-          contactMail: res.data.contactMail,
-          contactPhone: res.data.contactPhone,
-          gallery: res.data.gallery,
-        });
-      },
-      onError: () => {
-        toast.error('Hotel ', { duration: 5000, position: 'top-right' });
-      },
+  const mutation = useMutation({
+    mutationFn: (newHotel: CreateHotelInput) => hotelServices.create(newHotel as Hotel),
+    onSuccess: (res: { data: Hotel }) => {
+      setSelectedHotel({
+        _id: res.data._id,
+        name: res.data.name,
+        address: res.data.address,
+        description: res.data.description,
+        contactMail: res.data.contactMail,
+        contactPhone: res.data.contactPhone,
+        gallery: res.data.gallery,
+      });
     },
-  );
+    onError: () => {
+      toast.error('Hotel ', { duration: 5000, position: 'top-right' });
+    },
+  });
 
   const onSubmit = (data: CreateHotelInput) => {
     mutation.mutate(data);
