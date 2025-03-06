@@ -101,7 +101,7 @@ function PaginatedTable<T>({
                 <td colSpan={columns.length + 1} className="text-center">
                   <div className="flex flex-col items-center justify-center py-4">
                     <Image src="/error.png" width={200} height={200} alt="Error" />
-                    <p className="text-lg mt-2">Kayıt Bulunamadı</p>
+                    <p className="text-lg mt-2">No Records</p>
                   </div>
                 </td>
               </tr>

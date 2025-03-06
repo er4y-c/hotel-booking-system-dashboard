@@ -31,15 +31,11 @@ const data = {
       items: [
         {
           title: 'List Rooms',
-          url: '#',
+          url: '/rooms/list',
         },
         {
           title: 'Add New Room',
-          url: '#',
-        },
-        {
-          title: 'Delete Room',
-          url: '#',
+          url: '/rooms/create',
         },
       ],
     },
@@ -50,14 +46,6 @@ const data = {
       items: [
         {
           title: 'List Bookings',
-          url: '#',
-        },
-        {
-          title: 'Approve Bookings',
-          url: '#',
-        },
-        {
-          title: 'Cancel Bookings',
           url: '#',
         },
       ],
@@ -73,10 +61,6 @@ const data = {
         },
         {
           title: 'Hotel',
-          url: '#',
-        },
-        {
-          title: 'Profile',
           url: '#',
         },
       ],

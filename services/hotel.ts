@@ -12,7 +12,7 @@ export const hotelServices = {
     return await api.post('/hotel/create', data);
   },
   update: async (id: string, data: Hotel) => {
-    return await api.put(`/hotel/update/${id}`, data);
+    return await api.patch(`/hotel/update/${id}`, data);
   },
   delete: async (id: string) => {
     return await api.delete(`/hotel/delete/${id}`);
